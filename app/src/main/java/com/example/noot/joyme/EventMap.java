@@ -24,7 +24,6 @@ public class EventMap extends AppCompatActivity {
         btnCreateEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(EventMap.this,"new",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(EventMap.this,Event.class));
             }
         });

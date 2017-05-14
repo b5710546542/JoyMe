@@ -31,9 +31,18 @@ public class Event extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String title = edtTitle.getText().toString();
+                String place = edtPlace.getText().toString();
+                String time = edtTime.getText().toString();
+                String limitMember = edtLimitMember.getText().toString();
+                createEvent(title,place,time,limitMember);
                 finish();
                 startActivity(new Intent(Event.this,Profile.class));
             }
         });
+    }
+
+    private void createEvent(String title, String place, String time, String limitMember){
+
     }
 }
