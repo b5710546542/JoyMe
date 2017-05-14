@@ -10,12 +10,17 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Profile extends AppCompatActivity {
 
     private Button btnEvent;
     private TextView textUsername, textFriend;
     private FirebaseAuth mAuth;
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ref = database.getReference("server/saving-data/fireblog");
+
     private ListView listView;
     private EventListAdapter eventListAdapter;
 
