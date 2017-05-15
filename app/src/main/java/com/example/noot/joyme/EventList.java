@@ -5,11 +5,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.inthecheesefactory.thecheeselibrary.view.BaseCustomViewGroup;
 import com.inthecheesefactory.thecheeselibrary.view.state.BundleSavedState;
 
 public class EventList extends BaseCustomViewGroup {
+
+    TextView titleView, placeView, timeView, limitNumberView;
 
     public EventList(Context context) {
         super(context);
@@ -46,7 +49,25 @@ public class EventList extends BaseCustomViewGroup {
 
     private void initInstances() {
         // findViewById here
+        titleView = (TextView) findViewById(R.id.titleView);
+        placeView = (TextView) findViewById(R.id.placeView);
+        timeView = (TextView) findViewById(R.id.timeView);
+        limitNumberView = (TextView) findViewById(R.id.limitMemberView);
     }
+
+    public void setTitleView(String text){
+        titleView.setText(text);
+    }
+    public void setPlaceView(String text){
+        placeView.setText(text);
+    }
+    public void setTimeView(String text){
+        timeView.setText(text);
+    }
+    public void setLimitNumberView(String text){
+        limitNumberView.setText(text);
+    }
+
 
     private void initWithAttrs(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         /*

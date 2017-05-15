@@ -47,47 +47,9 @@ public class Profile extends AppCompatActivity {
 
         updateUser();
 
-        btnEvent.setOnClickListener(listener);
 //        listView.setOnClickListener(listener);
-
-
-        ref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Post newPost = dataSnapshot.getValue(Post.class);
-                System.out.println("Author: " + newPost.getAuthor());
-                System.out.println("Title: " + newPost.getTitle());
-                System.out.println("Place: " + newPost.getPlace());
-                System.out.println("Time: " + newPost.getTime());
-                System.out.println("Previous Post ID: " + prevChildKey);
-                Toast.makeText(getApplicationContext(),"ADD",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-                Toast.makeText(getApplicationContext(),"Change",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Toast.makeText(getApplicationContext(),"Remove",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
-                Post newPost = dataSnapshot.getValue(Post.class);
-                System.out.println("Author: " + newPost.getAuthor());
-                System.out.println("Title: " + newPost.getTitle());
-                System.out.println("Place: " + newPost.getPlace());
-                System.out.println("Time: " + newPost.getTime());
-                System.out.println("Previous Post ID: " + prevChildKey);
-                Toast.makeText(getApplicationContext(),"Move",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-
+        btnEvent.setOnClickListener(listener);
+        ref.addChildEventListener(childEventListener);
 
     }
 
@@ -104,6 +66,38 @@ public class Profile extends AppCompatActivity {
                     break;
             }
         }
+    };
+
+    ChildEventListener childEventListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+            if (!Data.getInstance().getKeyPost().contains(prevChildKey)) {
+                Post newPost = dataSnapshot.getValue(Post.class);
+                System.out.println("print key " + prevChildKey);
+                Data.getInstance().insertPost(newPost);
+                Data.getInstance().insertKeyPost(prevChildKey);
+                eventListAdapter.notifyDataSetChanged();
+                System.out.println("print new post " + newPost);
+                System.out.println("print children " + newPost.getTitle());
+            }
+
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {}
+
     };
 
     private void updateUser(){

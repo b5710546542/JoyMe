@@ -1,5 +1,4 @@
 package com.example.noot.joyme;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,16 +9,14 @@ import android.widget.BaseAdapter;
 
 public class EventListAdapter extends BaseAdapter {
 
-
-
     @Override
     public int getCount() {
-        return 10;
+        return Data.getInstance().getEventPost().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return Data.getInstance().getEventPost().get(position);
     }
 
     @Override
@@ -35,6 +32,13 @@ public class EventListAdapter extends BaseAdapter {
         }else{
             event = new EventList(parent.getContext());
         }
+
+        Post post = (Post) getItem(position);
+        event.setTitleView(post.getTitle());
+        event.setPlaceView(post.getPlace());
+        event.setTimeView(post.getTime());
+        event.setLimitNumberView(post.getMaxNumberMember()+"");
+
         return event;
     }
 }
