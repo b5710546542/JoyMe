@@ -48,9 +48,13 @@ public class Event extends AppCompatActivity {
                 String time = edtTime.getText().toString();
                 String maxMember = edtLimitMember.getText().toString();
                 int limit = Integer.parseInt(maxMember);
-                createEvent(title,place,time,limit);
-                finish();
-                startActivity(new Intent(Event.this,Profile.class));
+                if (title.isEmpty() || place.isEmpty() || time.isEmpty() || maxMember.isEmpty())
+                    Toast.makeText(getApplicationContext(),"Please fill in form",Toast.LENGTH_SHORT).show();
+                else {
+                    createEvent(title, place, time, limit);
+                    finish();
+                    startActivity(new Intent(Event.this, Profile.class));
+                }
             }
         });
     }
@@ -65,9 +69,9 @@ public class Event extends AppCompatActivity {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                         if(databaseError != null){
-                            Toast.makeText(getApplicationContext(),"create event FAIL",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"FAIL",Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(getApplicationContext(),"create event SUCCESS!!!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Event created",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,10 +48,15 @@ public class Profile extends AppCompatActivity {
 
         updateUser();
 
-//        listView.setOnClickListener(listener);
         btnEvent.setOnClickListener(listener);
         ref.addChildEventListener(childEventListener);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(),Data.getInstance().getEventPost().get((int)id).getTitle(),Toast.LENGTH_SHORT).show();
 
+            }
+        });
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -59,10 +65,6 @@ public class Profile extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.btnEvent:
                     startActivity(new Intent(Profile.this,EventMap.class));
-                    break;
-                case R.id.listView:
-                    Toast.makeText(getApplicationContext(),listView.getSelectedItemId()+"",
-                            Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -73,14 +75,10 @@ public class Profile extends AppCompatActivity {
         public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
             if (!Data.getInstance().getKeyPost().contains(prevChildKey)) {
                 Post newPost = dataSnapshot.getValue(Post.class);
-                System.out.println("print key " + prevChildKey);
                 Data.getInstance().insertPost(newPost);
                 Data.getInstance().insertKeyPost(prevChildKey);
                 eventListAdapter.notifyDataSetChanged();
-                System.out.println("print new post " + newPost);
-                System.out.println("print children " + newPost.getTitle());
             }
-
         }
 
         @Override
