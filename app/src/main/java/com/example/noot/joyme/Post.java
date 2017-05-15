@@ -18,6 +18,9 @@ public class Post {
     private int currentNumberMember;
     private Map<String, Object> postUpdate = new HashMap<String, Object>();;
 
+    public Post(){
+
+    }
     public Post(String author, String title, String place, String time, int maxNumberMember) {
         postUpdate.put("author",author);
         postUpdate.put("title",title);
@@ -34,10 +37,54 @@ public class Post {
 
     private void addMember(String user){
         if (currentNumberMember <= maxNumberMember){
-            String checkmember = currentNumberMember+ "";
+            String checkmember = "Member"+currentNumberMember;
             postUpdate.put(checkmember,user);
             currentNumberMember += 1;
         }
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getMaxNumberMember() {
+        return maxNumberMember;
+    }
+
+    public int getCurrentNumberMember() {
+        return currentNumberMember;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setMaxNumberMember(int maxNumberMember) {
+        this.maxNumberMember = maxNumberMember;
     }
 
 }

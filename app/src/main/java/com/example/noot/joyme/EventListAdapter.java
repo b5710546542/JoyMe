@@ -9,6 +9,9 @@ import android.widget.BaseAdapter;
  */
 
 public class EventListAdapter extends BaseAdapter {
+
+
+
     @Override
     public int getCount() {
         return 10;
@@ -21,7 +24,7 @@ public class EventListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
