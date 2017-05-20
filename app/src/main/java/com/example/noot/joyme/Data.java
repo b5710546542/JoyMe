@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Data {
 
     private static Data instance;
-    private int child;
     private ArrayList<Post> eventPost = new ArrayList<Post>();
     private ArrayList<String> keyPost = new ArrayList<String>();
 
@@ -51,11 +50,4 @@ public class Data {
         this.keyPost = keyPost;
     }
 
-    public int getNumChild() {
-        return child;
-    }
-
-    public void setNumChild(int child) {
-        this.child = child;
-    }
 }

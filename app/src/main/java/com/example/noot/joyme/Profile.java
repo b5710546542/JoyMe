@@ -3,6 +3,7 @@ package com.example.noot.joyme;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -50,11 +51,17 @@ public class Profile extends AppCompatActivity {
 
         btnEvent.setOnClickListener(listener);
         ref.addChildEventListener(childEventListener);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),Data.getInstance().getEventPost().get((int)id).getTitle(),Toast.LENGTH_SHORT).show();
-
+                String itemId = Data.getInstance().getKeyPost().get(position);
+                Toast.makeText(getApplicationContext(),itemId,Toast.LENGTH_SHORT).show();
+                Log.d("check no. of data ", Data.getInstance().getKeyPost().size()+"");
+                System.out.println("check no. of data "+ Data.getInstance().getKeyPost().size());
+                Intent mIntent = new Intent(Profile.this, Join.class);
+//                mIntent.putExtra("EXTRA_ITEM_ID", KEY);
+                startActivity(mIntent);
             }
         });
     }
@@ -73,10 +80,11 @@ public class Profile extends AppCompatActivity {
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-            if (!Data.getInstance().getKeyPost().contains(prevChildKey)) {
+            // update key and item
+            if (!Data.getInstance().getKeyPost().contains(prevChildKey)){
                 Post newPost = dataSnapshot.getValue(Post.class);
                 Data.getInstance().insertPost(newPost);
-                Data.getInstance().insertKeyPost(prevChildKey);
+                Data.getInstance().insertKeyPost(dataSnapshot.getKey());
                 eventListAdapter.notifyDataSetChanged();
             }
         }

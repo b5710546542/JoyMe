@@ -19,10 +19,13 @@ public class EventListAdapter extends BaseAdapter {
         return Data.getInstance().getEventPost().get(position);
     }
 
+    // Don't use this method
     @Override
     public long getItemId(int position) {
         return position;
     }
+
+    public String getItemKey(int position){ return Data.getInstance().getKeyPost().get(position); }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

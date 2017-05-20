@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".Profile" />
         <activity android:name=".Event" />
-        <activity android:name=".EventMap"></activity>
+        <activity android:name=".EventMap" />
+        <activity android:name=".Join"></activity>
     </application>
 
 </manifest>
