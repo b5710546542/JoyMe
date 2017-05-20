@@ -57,10 +57,8 @@ public class Profile extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String itemId = Data.getInstance().getKeyPost().get(position);
                 Toast.makeText(getApplicationContext(),itemId,Toast.LENGTH_SHORT).show();
-                Log.d("check no. of data ", Data.getInstance().getKeyPost().size()+"");
-                System.out.println("check no. of data "+ Data.getInstance().getKeyPost().size());
                 Intent mIntent = new Intent(Profile.this, Join.class);
-//                mIntent.putExtra("EXTRA_ITEM_ID", KEY);
+                mIntent.putExtra("EXTRA_ITEM_KEY", itemId );
                 startActivity(mIntent);
             }
         });
