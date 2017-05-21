@@ -49,9 +49,10 @@ public class Join extends AppCompatActivity {
         int id = Data.getInstance().getKeyPost().indexOf(key);
         Post post = Data.getInstance().getEventPost().get(id);
 
-        ownerJoin.setText(post.getAuthor());
-        titleJoin.setText(post.getTitle());
-        placeJoin.setText(post.getPlace());
-        timeJoin.setText(post.getTime());
+        ownerJoin.setText("Owner " + post.getAuthor());
+        titleJoin.setText("Title " + post.getTitle());
+        placeJoin.setText("Place " + post.getPlace());
+        timeJoin.setText("Time " + post.getTime());
+        maxmemberJoin.setText("Member " + post.getCurrentNumberMember() + "/" + post.getMaxNumberMember());
     }
 }

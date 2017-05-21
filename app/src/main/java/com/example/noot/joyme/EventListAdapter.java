@@ -25,8 +25,6 @@ public class EventListAdapter extends BaseAdapter {
         return position;
     }
 
-    public String getItemKey(int position){ return Data.getInstance().getKeyPost().get(position); }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         EventList event;
@@ -37,11 +35,12 @@ public class EventListAdapter extends BaseAdapter {
         }
 
         Post post = (Post) getItem(position);
-        event.setTitleView(post.getTitle());
-        event.setPlaceView(post.getPlace());
-        event.setTimeView(post.getTime());
-        event.setLimitNumberView(post.getMaxNumberMember()+"");
+        event.setTitleView("Title " + post.getTitle());
+        event.setPlaceView("Place " + post.getPlace());
+        event.setTimeView("Time " + post.getTime());
+        event.setLimitNumberView("Member " + post.getMaxNumberMember()+"");
 
         return event;
     }
+
 }

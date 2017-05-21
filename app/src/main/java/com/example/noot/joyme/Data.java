@@ -2,7 +2,9 @@ package com.example.noot.joyme;
 
 import android.content.Context;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.inthecheesefactory.thecheeselibrary.manager.Contextor;
 
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ public class Data {
     private static Data instance;
     private ArrayList<Post> eventPost = new ArrayList<Post>();
     private ArrayList<String> keyPost = new ArrayList<String>();
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ref = database.getReference("server/saving-data/events/posts");
 
     public static Data getInstance() {
         if (instance == null)
@@ -48,6 +52,28 @@ public class Data {
 
     public void setKeyPost(ArrayList<String> keyPost) {
         this.keyPost = keyPost;
+    }
+
+    public void replaceData(int i, Post post){
+        eventPost.set(i, post);
+    }
+
+    public void updateData(DataSnapshot dataSnapshot){
+        Post newPost = dataSnapshot.getValue(Post.class);
+        // update key and item
+        if (!keyPost.contains(dataSnapshot.getKey())){
+            insertPost(newPost);
+            insertKeyPost(dataSnapshot.getKey());
+        }else {
+            int index = keyPost.indexOf(dataSnapshot.getKey());
+            replaceData(index, newPost);
+        }
+    }
+
+    public void removeData(DataSnapshot dataSnapshot){
+        int index = keyPost.indexOf(dataSnapshot.getKey());
+        keyPost.remove(index);
+        eventPost.remove(index);
     }
 
 }

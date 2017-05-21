@@ -58,7 +58,7 @@ public class Profile extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String itemId = Data.getInstance().getKeyPost().get(position);
                 Intent mIntent = new Intent(Profile.this, Join.class);
-                mIntent.putExtra("EXTRA_ITEM_KEY", itemId );
+                mIntent.putExtra("EXTRA_ITEM_KEY", itemId);
                 startActivity(mIntent);
             }
         });
@@ -67,9 +67,9 @@ public class Profile extends AppCompatActivity {
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.btnEvent:
-                    startActivity(new Intent(Profile.this,EventMap.class));
+                    startActivity(new Intent(Profile.this, EventMap.class));
                     break;
             }
         }
@@ -78,33 +78,35 @@ public class Profile extends AppCompatActivity {
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-            // update key and item
-            if (!Data.getInstance().getKeyPost().contains(dataSnapshot.getKey())){
-                Post newPost = dataSnapshot.getValue(Post.class);
-                Data.getInstance().insertPost(newPost);
-                Data.getInstance().insertKeyPost(dataSnapshot.getKey());
-                eventListAdapter.notifyDataSetChanged();
-            }
+            Data.getInstance().updateData(dataSnapshot);
+            eventListAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+            Data.getInstance().updateData(dataSnapshot);
+            eventListAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
+            Data.getInstance().removeData(dataSnapshot);
+            eventListAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
+            Data.getInstance().updateData(dataSnapshot);
+            eventListAdapter.notifyDataSetChanged();
         }
 
         @Override
-        public void onCancelled(DatabaseError databaseError) {}
+        public void onCancelled(DatabaseError databaseError) {
+        }
 
     };
 
-    private void updateUser(){
+    private void updateUser() {
         FirebaseUser user = mAuth.getCurrentUser();
         textUsername.setText(user.getEmail());
         textFriend.setText("1 Friend");

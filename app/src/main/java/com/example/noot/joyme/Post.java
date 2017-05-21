@@ -21,26 +21,19 @@ public class Post {
     public Post(){
 
     }
+
     public Post(String author, String title, String place, String time, int maxNumberMember) {
+        currentNumberMember = 1;
         postUpdate.put("author",author);
         postUpdate.put("title",title);
         postUpdate.put("place",place);
         postUpdate.put("time",time);
         postUpdate.put("maxNumberMember",maxNumberMember);
-        currentNumberMember = 1;
-        addMember(author);
+        postUpdate.put("currentNumberMember",currentNumberMember);
     }
 
     public Map<String, Object> getPost(){
         return postUpdate;
-    }
-
-    private void addMember(String user){
-        if (currentNumberMember <= maxNumberMember){
-            String checkmember = "Member"+currentNumberMember;
-            postUpdate.put(checkmember,user);
-            currentNumberMember += 1;
-        }
     }
 
     public String getAuthor() {
