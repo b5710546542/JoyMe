@@ -1,6 +1,13 @@
 package com.example.noot.joyme;
 
 
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +23,9 @@ public class Post {
     private String time;
     private int maxNumberMember;
     private int currentNumberMember;
-    private Map<String, Object> postUpdate = new HashMap<String, Object>();;
+    private Map<String, Object> postUpdate = new HashMap<String, Object>();
+    private ArrayList<String> members = new ArrayList<String>();
+//    private Map<String, Object> memberUpdate = new HashMap<String, Object>();
 
     public Post(){
 
@@ -29,11 +38,26 @@ public class Post {
         postUpdate.put("place",place);
         postUpdate.put("time",time);
         postUpdate.put("maxNumberMember",maxNumberMember);
-        postUpdate.put("currentNumberMember",currentNumberMember);
+        postUpdate.put("currentNumberMember", currentNumberMember);
+        members.add(author);
+        postUpdate.put("members",members);
+    }
+
+    public void addMember(String member){
+//        currentNumberMember++;
+//        if (currentNumberMember <= maxNumberMember) {
+            postUpdate.put("currentNumberMember", currentNumberMember);
+            members.add(member);
+//            postUpdate.put("members",members);
+//        }
     }
 
     public Map<String, Object> getPost(){
         return postUpdate;
+    }
+
+    public ArrayList<String> getMembers(){
+        return members;
     }
 
     public String getAuthor() {

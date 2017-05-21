@@ -63,7 +63,14 @@ public class Event extends AppCompatActivity {
         UserInfo user = mAuth.getCurrentUser();
         DatabaseReference postsRef = ref.child("posts");
         DatabaseReference newPostRef = postsRef.push();
+
+//        String keyEvent = newPostRef.getKey();
+//        DatabaseReference memberRef = ref.child("member");
+
         Post post = new Post(user.getEmail(), title, place, time, maxMember);
+//        post.addMember(keyEvent, user.getEmail());
+
+        newPostRef.updateChildren(post.getPost());
         newPostRef.setValue(post.getPost(),
                 new DatabaseReference.CompletionListener() {
                     @Override
@@ -75,5 +82,6 @@ public class Event extends AppCompatActivity {
                         }
                     }
                 });
+
     }
 }

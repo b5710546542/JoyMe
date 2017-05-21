@@ -15,6 +15,7 @@ public class Join extends AppCompatActivity {
     TextView ownerJoin, titleJoin, placeJoin, timeJoin, maxmemberJoin;
     ListView listJoin;
     String key;
+    int index;
     Button btnJoin;
 
     @Override
@@ -22,6 +23,7 @@ public class Join extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         key = getIntent().getExtras().getString("EXTRA_ITEM_KEY");
+        index = Data.getInstance().getKeyPost().indexOf(key);
         initInstances();
     }
 
@@ -33,6 +35,10 @@ public class Join extends AppCompatActivity {
         maxmemberJoin = (TextView) findViewById(R.id.maxMemberJoin);
         listJoin = (ListView) findViewById(R.id.listJoin);
         btnJoin = (Button) findViewById(R.id.btnJoin);
+
+        MembertListAdapter membertListAdapter = new MembertListAdapter();
+        membertListAdapter.setKeyEvent(index);
+        listJoin.setAdapter(membertListAdapter);
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
