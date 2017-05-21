@@ -53,10 +53,10 @@ public class Profile extends AppCompatActivity {
         ref.addChildEventListener(childEventListener);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //send key to join page
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String itemId = Data.getInstance().getKeyPost().get(position);
-                Toast.makeText(getApplicationContext(),itemId,Toast.LENGTH_SHORT).show();
                 Intent mIntent = new Intent(Profile.this, Join.class);
                 mIntent.putExtra("EXTRA_ITEM_KEY", itemId );
                 startActivity(mIntent);
@@ -79,7 +79,7 @@ public class Profile extends AppCompatActivity {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
             // update key and item
-            if (!Data.getInstance().getKeyPost().contains(prevChildKey)){
+            if (!Data.getInstance().getKeyPost().contains(dataSnapshot.getKey())){
                 Post newPost = dataSnapshot.getValue(Post.class);
                 Data.getInstance().insertPost(newPost);
                 Data.getInstance().insertKeyPost(dataSnapshot.getKey());

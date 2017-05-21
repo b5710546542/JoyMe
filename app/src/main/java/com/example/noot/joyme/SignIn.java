@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,7 @@ public class SignIn extends AppCompatActivity {
     private Button btnSignin, btnSignUp;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class SignIn extends AppCompatActivity {
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
         btnSignin = (Button) findViewById(R.id.btnSignIn);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         btnSignUp.setOnClickListener(listener);
         btnSignin.setOnClickListener(listener);
@@ -68,6 +71,7 @@ public class SignIn extends AppCompatActivity {
 
             String username = edtUsername.getText().toString();
             String password = edtPassword.getText().toString();
+            progressBar.setVisibility(View.VISIBLE);
 
             switch (v.getId()){
                 case R.id.btnSignUp :
@@ -90,7 +94,9 @@ public class SignIn extends AppCompatActivity {
                             if (!task.isSuccessful()) {
                                 Toast.makeText(SignIn.this, "Sign in fail",
                                         Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
                             }else{
+                                progressBar.setVisibility(View.INVISIBLE);
                                 finish();
                                 startActivity(new Intent(SignIn.this,Profile.class));
                             }
@@ -116,9 +122,11 @@ public class SignIn extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(SignIn.this, "Sign up fail",
                                     Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
                         }else{
                             Toast.makeText(SignIn.this, "Account created",
                                     Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                 });
