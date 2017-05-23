@@ -16,6 +16,12 @@ public class Data {
     private static Data instance;
     private ArrayList<Post> eventPost = new ArrayList<Post>();
     private ArrayList<String> keyPost = new ArrayList<String>();
+
+    //user info
+    private User user;
+//    private ArrayList<String> eventlist = new ArrayList<String>();
+//    private ArrayList<String> friendlist = new ArrayList<String>();
+
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("server/saving-data/events/posts");
 
@@ -31,7 +37,7 @@ public class Data {
         mContext = Contextor.getInstance().getContext();
     }
 
-    public void insertPost(Post post){
+    public void insertPost(Post post) {
         eventPost.add(post);
     }
 
@@ -43,7 +49,7 @@ public class Data {
         this.eventPost = eventPost;
     }
 
-    public void insertKeyPost(String key){
+    public void insertKeyPost(String key) {
         keyPost.add(key);
     }
 
@@ -55,23 +61,68 @@ public class Data {
         this.keyPost = keyPost;
     }
 
-    public void replaceData(int i, Post post){
+//    public ArrayList<String> getEventlist() {
+//        return eventlist;
+//    }
+//
+//    public void setEventlist(ArrayList<String> eventlist) {
+//        this.eventlist = eventlist;
+//    }
+//
+//    public ArrayList<String> getFriendlist() {
+//        return friendlist;
+//    }
+//
+//    public void setFriendlist(ArrayList<String> friendlist) {
+//        this.friendlist = friendlist;
+//    }
+//
+//
+//    public void insertEventPost(String event) {
+//        eventlist.add(event);
+//    }
+//
+//    public void insertFriendPost(String friend) {
+//        friendlist.add(friend);
+//    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void replaceData(int i, Post post) {
         eventPost.set(i, post);
     }
 
-    public void updateData(DataSnapshot dataSnapshot){
+    public void setUpUser(User user) {
+        this.user = user;
+//        this.eventlist = user.getEventList();
+//        this.friendlist = user.getFriendList();
+    }
+
+    public void updateUser(DataSnapshot dataSnapshot) {
+        this.user = dataSnapshot.getValue(User.class);
+//        eventlist = newUser.getEventList();
+//        friendlist = newUser.getFriendList();
+    }
+
+    public void updateData(DataSnapshot dataSnapshot) {
         Post newPost = dataSnapshot.getValue(Post.class);
         // update key and item
-        if (!keyPost.contains(dataSnapshot.getKey())){
+        if (!keyPost.contains(dataSnapshot.getKey())) {
             insertPost(newPost);
             insertKeyPost(dataSnapshot.getKey());
-        }else {
+        } else {
             int index = keyPost.indexOf(dataSnapshot.getKey());
             replaceData(index, newPost);
         }
     }
 
-    public void removeData(DataSnapshot dataSnapshot){
+    public void removeData(DataSnapshot dataSnapshot) {
         int index = keyPost.indexOf(dataSnapshot.getKey());
         keyPost.remove(index);
         eventPost.remove(index);

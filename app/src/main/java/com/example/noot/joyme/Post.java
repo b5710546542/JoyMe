@@ -25,7 +25,6 @@ public class Post {
     private int currentNumberMember;
     private Map<String, Object> postUpdate = new HashMap<String, Object>();
     private ArrayList<String> members = new ArrayList<String>();
-//    private Map<String, Object> memberUpdate = new HashMap<String, Object>();
 
     public Post(){
 

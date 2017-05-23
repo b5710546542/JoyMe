@@ -40,6 +40,7 @@ public class Join extends AppCompatActivity {
         membertListAdapter.setKeyEvent(index);
         listJoin.setAdapter(membertListAdapter);
 
+
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
